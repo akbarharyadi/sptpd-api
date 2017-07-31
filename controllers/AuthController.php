@@ -19,7 +19,7 @@ class AuthController extends \yii\rest\Controller
         $password = !empty($_POST['password'])?$_POST['password']:'';
         $response = [];
         // validasi jika kosong
-        return $_POST;
+        // return $_POST;
         if (empty($username) || empty($password)) {
             $response = [
                 'status' => 'error',
@@ -36,12 +36,7 @@ class AuthController extends \yii\rest\Controller
                     $response = [
                     'status' => 'success',
                     'message' => 'login berhasil!',
-                    'user' => [
-                        'id' => $user->id,
-                        'username' => $user->username,
-                        // token diambil dari field auth_key
-                        'token' => $user->auth_key,
-                    ]
+                    'token' => $user->auth_key,
                     ];
                 } // Jika password salah maka bikin response seperti ini
                 else {
@@ -55,7 +50,7 @@ class AuthController extends \yii\rest\Controller
             else {
                 $response = [
                 'status' => 'error',
-                'message' => 'username tidak ditemukan dalam database!',
+                'message' => 'username tidak ditemukan!',
                 'data' => '',
                 ];
             }
