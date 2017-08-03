@@ -34,16 +34,16 @@ class AuthController extends \yii\rest\Controller
               // check, valid nggak passwordnya, jika valid maka bikin response success
                 if ($user->validatePassword($password)) {
                     $response = [
-                    'status' => 'success',
-                    'message' => 'login berhasil!',
-                    'token' => $user->auth_key,
+                        'status' => 'success',
+                        'message' => 'login berhasil!',
+                        'token' => $user->auth_key,
                     ];
                 } // Jika password salah maka bikin response seperti ini
                 else {
                     $response = [
-                    'status' => 'error',
-                    'message' => 'password salah!',
-                    'data' => '',
+                        'status' => 'error',
+                        'message' => 'password salah!',
+                        'data' => '',
                     ];
                 }
             } // Jika username tidak ditemukan bikin response kek gini
@@ -58,4 +58,5 @@ class AuthController extends \yii\rest\Controller
  
         return $response;
     }
+    
 }
