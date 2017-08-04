@@ -2,29 +2,24 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\auth\HttpBearerAuth;
  
 class ApiController extends \yii\rest\Controller
 {
   public function behaviors()
-  {
-    $behaviors = parent::behaviors();
-    $behaviors['verbs'] = [
-      'class' => \yii\filters\VerbFilter::className(),
-      'actions' => [
-        'userData'  => ['get'],
-      ],
-    ];
-    $behaviors['authenticator'] = [
-      'class' => \yii\filters\auth\HttpBearerAuth::className(),
-    ];
-    return $behaviors;
-  }
+    {
+        return array_merge(parent::behaviors(), [
+            'bearerAuth' => [
+                'class' => HttpBearerAuth::className()
+            ]
+        ]);
+    }
 
   public function actionUserData()
   {
-    Yii::$app->response->format = Response::FORMAT_JSON;
+    // \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     $response = [];
-    $dataWp = \app\models\TDaftar::find()->where(['npwpd' => Yii::$app->user->identity->username])->one();
+    $dataWp = \app\models\TDaftar::find()->where(['npwpd' => Yii::$app->user->identity->username])->asArray()->one();
     if($dataWp == null){
       $response = [
         'status' => 'error',
