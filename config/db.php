@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'pgsql:host=192.168.11.11;dbname=pad_purwakarta_terbaru',
-    'username' => 'postgres',
-    'password' => 'password',
+    'dsn' => 'pgsql:host=tantor.db.elephantsql.com;dbname=zggnffys',
+    'username' => 'zggnffys',
+    'password' => 'r6GeXNSD3YzVQgs4OFCQ495jwNnLFo41',
     'charset' => 'utf8'
 
     // Schema cache options (for production environment)
