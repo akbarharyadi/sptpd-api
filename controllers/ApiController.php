@@ -44,7 +44,7 @@ class ApiController extends \yii\rest\Controller
     $Ayat = \app\models\TAyat::find()->select('tahun')->distinct(true)->orderBy(['tahun' => SORT_DESC])->all();
     $yarray = [];
     foreach ($Ayat as $key):
-      $yarray = $key->tahun;
+      $yarray = array_push($yarray, $key->tahun);
     endforeach;
     if (empty($Ayat)) {
       $response = [
