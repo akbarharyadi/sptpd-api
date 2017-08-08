@@ -41,11 +41,7 @@ class ApiController extends \yii\rest\Controller
   {
     $response = [];
     $npwpd = Yii::$app->user->identity->username;
-    $Ayat = \app\models\TAyat::find()->select('tahun')->distinct(true)->orderBy(['tahun' => SORT_DESC])->all();
-    $yarray = [];
-    foreach ($Ayat as $key):
-      $yarray = array_push($yarray, $key->tahun);
-    endforeach;
+    $Ayat = \app\models\TAyat::find()->select('tahun')->distinct(true)->orderBy(['tahun' => SORT_DESC])->asArray()->all();
     if (empty($Ayat)) {
       $response = [
         'status' => 'error',
@@ -56,7 +52,7 @@ class ApiController extends \yii\rest\Controller
     else {
       $response = [
         'status' => 'success',
-        'dataYear' => $yarray,
+        'dataYear' => $Ayat,
         'msg' => 'Tahun pajak ditemukan.',
       ];
     }
