@@ -41,7 +41,7 @@ class ApiController extends \yii\rest\Controller
   {
     $response = [];
     $npwpd = Yii::$app->user->identity->username;
-    $Ayat = \app\models\TAyat::find()->select('tahun')->distinct(true)->orderBy(['tahun' => SORT_ASC])->asArray()->all();
+    $Ayat = \app\models\TAyat::find()->select('tahun')->distinct(true)->orderBy(['tahun' => SORT_DESC])->asArray()->all();
     if (empty($Ayat)) {
       $response = [
         'status' => 'error',
