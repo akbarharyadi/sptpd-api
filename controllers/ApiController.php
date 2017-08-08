@@ -101,7 +101,7 @@ class ApiController extends \yii\rest\Controller
   {
     $response = [];
     $year = $_POST['year'];
-    $kd_ayt = $_POST['kd_yat'];
+    $kd_ayt = $_POST['kd_ayat'];
     $npwpd = Yii::$app->user->identity->username;
     if (empty($year) || empty($kd_ayt)) {
       $response = [
