@@ -3,30 +3,31 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\auth\HttpBearerAuth;
- 
+
 class ApiController extends \yii\rest\Controller
 {
   public function behaviors()
-    {
-        return array_merge(parent::behaviors(), [
-            'bearerAuth' => [
-                'class' => HttpBearerAuth::className()
-            ]
-        ]);
-    }
+  {
+    return array_merge(parent::behaviors(), [
+      'bearerAuth' => [
+        'class' => HttpBearerAuth::className()
+      ]
+    ]);
+  }
 
   public function actionUserData()
   {
     // \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     $response = [];
     $dataWp = \app\models\TDaftar::find()->where(['npwpd' => Yii::$app->user->identity->username])->asArray()->one();
-    if($dataWp == null){
+    if ($dataWp == null) {
       $response = [
         'status' => 'error',
         'dataWp' => null,
         'msg' => 'data wajib pajak tidak ditemukan.',
       ];
-    } else {
+    }
+    else {
       $response = [
         'status' => 'success',
         'dataWp' => $dataWp,
@@ -34,5 +35,27 @@ class ApiController extends \yii\rest\Controller
       ];
     }
     return $response;
-  } 
+  }
+
+  public function actionGetYear()
+  {
+    $response = [];
+    $npwpd = Yii::$app->user->identity->username;
+    $Ayat = \app\models\TAyat::find()->select('tahun')->distinct(true)->asArray()->all();
+    if (empty($Ayat)) {
+      $response = [
+        'status' => 'error',
+        'dataYear' => null,
+        'msg' => 'Tahun pajak tidak ditemukan.',
+      ];
+    }
+    else {
+      $response = [
+        'status' => 'success',
+        'dataWp' => $Ayat,
+        'msg' => 'Tahun pajak ditemukan.',
+      ];
+    }
+    return $response;
+  }
 }
