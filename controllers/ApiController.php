@@ -52,7 +52,7 @@ class ApiController extends \yii\rest\Controller
     else {
       $response = [
         'status' => 'success',
-        'dataYear' => $Ayat,
+        'dataYear' => (array)$Ayat,
         'msg' => 'Tahun pajak ditemukan.',
       ];
     }
