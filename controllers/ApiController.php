@@ -136,4 +136,43 @@ class ApiController extends \yii\rest\Controller
     }
     return $response;
   }
+
+  public function actionGetSubTaxesFromTax()
+  {
+    $response = [];
+    $year = $_POST['year'];
+    $kd_ayt = $_POST['kd_ayat'];
+    $npwpd = Yii::$app->user->identity->username;
+    if (empty($year) || empty($kd_ayt)) {
+      $response = [
+        'status' => 'error',
+        'dataSubTaxes' => (array)$Ayat,
+        'message' => 'Tahun dan ayat tidak boleh kosong!',
+      ];
+    } else {
+      $Ayat = \app\models\TAyat::find()
+        ->select('id_ayt, nm_ayt')
+        ->where(['tahun' => $year, 't_ayat.kd_ayt' => $kd_ayt])
+        ->andWhere("substring(t_ayat.kd_ayt, 1, 2) = '11' and jn_ayt !='00'")
+        ->andWhere(['not in', 't_ayat.kd_ayt', ['1113', '1114']])
+        ->orderBy(['t_ayat.id_ayt' => \SORT_ASC])
+        ->asArray()
+        ->all();
+      if (empty($Ayat)) {
+        $response = [
+          'status' => 'error',
+          'dataSubTaxes' => null,
+          'msg' => 'Rekening pajak tidak ditemukan.',
+        ];
+      }
+      else {
+        $response = [
+          'status' => 'success',
+          'dataSubTaxes' => (array)$Ayat,
+          'msg' => 'Rekening pajak ditemukan.',
+        ];
+      }
+    }
+    return $response;
+  }
 }
