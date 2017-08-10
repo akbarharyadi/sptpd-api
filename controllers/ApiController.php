@@ -151,7 +151,7 @@ class ApiController extends \yii\rest\Controller
       ];
     } else {
       $Ayat = \app\models\TAyat::find()
-        ->select('id_ayt, nm_ayt')
+        ->select('id_ayt, nm_ayt, tarifpr, tarifrp')
         ->where(['tahun' => $year, 't_ayat.kd_ayt' => $kd_ayt])
         ->andWhere("substring(t_ayat.kd_ayt, 1, 2) = '11' and jn_ayt !='00'")
         ->andWhere(['not in', 't_ayat.kd_ayt', ['1113', '1114']])
